@@ -19,7 +19,12 @@ const Positions = {
 const WinningConditions = {
     TopRow: [Positions.TopLeft, Positions.TopCenter, Positions.TopRight],
     MiddleRow: [Positions.MiddleLeft, Positions.MiddleCenter, Positions.MiddleRight],
-    BottomRow: [Positions.BottomLeft, Positions.BottomCenter, Positions.BottomRight]
+    BottomRow: [Positions.BottomLeft, Positions.BottomCenter, Positions.BottomRight],
+    LeftColumn: [Positions.TopLeft, Positions.MiddleLeft, Positions.BottomLeft],
+    CenterColumn: [Positions.TopCenter, Positions.MiddleCenter, Positions.BottomCenter],
+    RightColumn: [Positions.TopRight, Positions.MiddleRight, Positions.BottomRight],
+    LeftDiagonal: [Positions.TopLeft, Positions.MiddleCenter, Positions.BottomRight],
+    RightDiagnoal: [Positions.TopRight, Positions.MiddleCenter, Positions.BottomLeft]
 }
 
 class TicTacToe {
@@ -51,7 +56,7 @@ class TicTacToe {
 
     playTurn(position) {
         if(this.board.positionIsAvailable(position)) {
-            this.board.setPosition(position,this.currentPlayer);
+            this.board.setPosition(position, this.currentPlayer);
             this.switchPlayer();
         }
     }
@@ -59,11 +64,7 @@ class TicTacToe {
 
 class DetermineWinner{
     constructor() {
-        this.winningConditions = [
-            WinningConditions.TopRow,
-            WinningConditions.MiddleRow,
-            WinningConditions.BottomRow
-        ];
+        this.winningConditions = Object.values(WinningConditions);
     }
 
     getWinner(board){

@@ -107,6 +107,53 @@ describe("tic tac toe game with added calisthenics", () => {
         expect(ticTacToe.checkForWinner()).toEqual(Players.X);
     });
 
-    
+    it("left vertical win for player x", () => {
+        ticTacToe.playTurn(Positions.TopLeft);
+        ticTacToe.playTurn(Positions.TopCenter);
+        ticTacToe.playTurn(Positions.MiddleLeft);
+        ticTacToe.playTurn(Positions.MiddleCenter);
+        ticTacToe.playTurn(Positions.BottomLeft);
 
+        expect(ticTacToe.checkForWinner()).toEqual(Players.X);
+    });
+
+    it("center vertial win for player x", () => {
+        ticTacToe.playTurn(Positions.TopCenter);
+        ticTacToe.playTurn(Positions.TopLeft);
+        ticTacToe.playTurn(Positions.MiddleCenter);
+        ticTacToe.playTurn(Positions.MiddleLeft);
+        ticTacToe.playTurn(Positions.BottomCenter);
+
+        expect(ticTacToe.checkForWinner()).toEqual(Players.X);
+    });
+
+    it("right vertial win for player x", () => {
+        ticTacToe.playTurn(Positions.TopRight);
+        ticTacToe.playTurn(Positions.TopLeft);
+        ticTacToe.playTurn(Positions.MiddleRight);
+        ticTacToe.playTurn(Positions.MiddleLeft);
+        ticTacToe.playTurn(Positions.BottomRight);
+
+        expect(ticTacToe.checkForWinner()).toEqual(Players.X);
+    });
+
+    it("left diagonal win for player x", () => {
+        ticTacToe.playTurn(Positions.TopLeft);
+        ticTacToe.playTurn(Positions.MiddleRight);
+        ticTacToe.playTurn(Positions.MiddleCenter);
+        ticTacToe.playTurn(Positions.MiddleLeft);
+        ticTacToe.playTurn(Positions.BottomRight);
+
+        expect(ticTacToe.checkForWinner()).toEqual(Players.X);
+    });
+
+    it("right diagonal win for player x", () => {
+        ticTacToe.playTurn(Positions.TopRight);
+        ticTacToe.playTurn(Positions.MiddleRight);
+        ticTacToe.playTurn(Positions.MiddleCenter);
+        ticTacToe.playTurn(Positions.MiddleLeft);
+        ticTacToe.playTurn(Positions.BottomLeft);
+
+        expect(ticTacToe.checkForWinner()).toEqual(Players.X);
+    });
 });
