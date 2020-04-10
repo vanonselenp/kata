@@ -12,9 +12,11 @@ def load_file(filename):
         count = 0
         for name in names:
             if count < 26:
-                super_hero_names['first'][chr(letter_start + count)] = name
+                current_letter = chr(letter_start + count)
+                super_hero_names['first'][current_letter] = name
             else:
-                super_hero_names['last'][chr(letter_start + count - 26)] = name
+                current_letter_less_26 = chr(letter_start + count - 26)
+                super_hero_names['last'][current_letter_less_26] = name
             count += 1
         
         return super_hero_names
@@ -22,16 +24,16 @@ def load_file(filename):
 
 def generate_name(filename, person_name):
     superhero = load_file(filename)
+    person_names = person_name.split(' ')
+    super_names = []
 
-    names = person_name.split(' ')
+    super_names.append(superhero['first'][person_names[0][0].upper()])
 
-    first_name = superhero['first'][names[0][0].upper()]
+    for name in person_names[1:]:
+        super_names.append(superhero['last'][name[0].upper()])
 
-    last_names = []
-    for name in names[1:]:
-        last_names.append(superhero['last'][name[0].upper()])
+    return " ".join(super_names)
 
-    return "%s %s" % (first_name, " ".join(last_names))
 
 print(generate_name('./python/edx/names.txt', "Peter daniel van onselen"))
 
