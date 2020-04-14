@@ -1,2 +1,4 @@
 .gitconfig
 **/node_modules/
+.venv
+.idea

@@ -35,7 +35,7 @@ def generate_name(filename, person_name):
     return " ".join(super_names)
 
 
-print(generate_name('./python/edx/names.txt', "Peter daniel van onselen"))
+# print(generate_name('./python/edx/names.txt', "Peter daniel van onselen"))
 
 
 #A common meme on social media is the name generator. These
