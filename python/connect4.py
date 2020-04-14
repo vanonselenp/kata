@@ -42,6 +42,85 @@ class Column:
     Seven = 6
 
 
+class Connect4:
+    def __init__(self):
+        self.board = Board()
+        self.current_player = Player.X
+
+    def get_current_player(self):
+        return self.current_player
+
+    def play_at(self, position):
+        successfully_placed = self.board.place_at(position, self.current_player)
+
+        if successfully_placed:
+            self.switch_player()
+
+    def switch_player(self):
+        self.current_player = Player.X if self.current_player != Player.X else Player.O
+
+    def get_board(self):
+        return self.board.get_display()
+
+    def get_winner(self):
+        return self.board.get_winner()
+
+
+class Board:
+    def __init__(self):
+        self.board = [
+            [Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty],
+            [Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty],
+            [Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty],
+            [Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty],
+            [Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty],
+            [Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty]
+        ]
+        self.determine_winner = DetermineWinner()
+
+    def place_at(self, position, player):
+        for row in range(5, -1, -1):
+            if self.board[row][position] == Player.Empty:
+                self.board[row][position] = player
+                return True
+
+        return False
+
+    def get_display(self):
+        return "\n".join(["".join(x) for x in self.board])
+
+    def get_winner(self):
+        return self.determine_winner.get_winner(self.board)
+
+
+class DetermineWinner:
+    def __init__(self):
+        self.rules = Rules()
+
+    @staticmethod
+    def apply_rule(rule, board):
+        rows, columns, applied_rule = rule
+        for i in rows:
+            for j in columns:
+                if applied_rule(i, j, board):
+                    return board[i][j]
+
+    def get_winner(self, board):
+        rules = self.rules.get_rules()
+
+        winners = [self.apply_rule(rule, board) for rule in rules]
+
+        print(winners)
+
+        if Player.X in winners:
+            return Player.X
+
+        if Player.O in winners:
+            return Player.O
+
+        return None
+
+
 class Rules:
     def get_rules(self):
         return [
@@ -98,85 +177,6 @@ class Rules:
             == board[row - 2][column - 2]
             == board[row - 3][column - 3]
         )
-
-
-class DetermineWinner:
-    def __init__(self):
-        self.rules = Rules()
-
-    @staticmethod
-    def apply_rule(rule, board):
-        rows, columns, applied_rule = rule
-        for i in rows:
-            for j in columns:
-                if applied_rule(i, j, board):
-                    return board[i][j]
-
-    def get_winner(self, board):
-        rules = self.rules.get_rules()
-
-        winners = [self.apply_rule(rule, board) for rule in rules]
-
-        print(winners)
-
-        if Player.X in winners:
-            return Player.X
-
-        if Player.O in winners:
-            return Player.O
-
-        return None
-
-
-class Board:
-    def __init__(self):
-        self.board = [
-            [Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty],
-            [Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty],
-            [Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty],
-            [Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty],
-            [Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty],
-            [Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty, Player.Empty]
-        ]
-        self.determine_winner = DetermineWinner()
-
-    def place_at(self, position, player):
-        for row in range(5, -1, -1):
-            if self.board[row][position] == Player.Empty:
-                self.board[row][position] = player
-                return True
-
-        return False
-
-    def get_display(self):
-        return "\n".join(["".join(x) for x in self.board])
-
-    def get_winner(self):
-        return self.determine_winner.get_winner(self.board)
-
-
-class Connect4:
-    def __init__(self):
-        self.board = Board()
-        self.current_player = Player.X
-
-    def get_current_player(self):
-        return self.current_player
-
-    def play_at(self, position):
-        successfully_placed = self.board.place_at(position, self.current_player)
-
-        if successfully_placed:
-            self.switch_player()
-
-    def switch_player(self):
-        self.current_player = Player.X if self.current_player != Player.X else Player.O
-
-    def get_board(self):
-        return self.board.get_display()
-
-    def get_winner(self):
-        return self.board.get_winner()
 
 
 class TestConnect4:
