@@ -1,8 +1,7 @@
-import unittest
+import requests
 
-# class TestSuperHeroName(unittest.TestCase):
-    # def test_
+url = "https://dog.ceo/api/breeds/image/random"
 
+response = requests.request("GET", url)
 
-if __name__ == '__main__':
-    unittest.main()
+print(response.text)
